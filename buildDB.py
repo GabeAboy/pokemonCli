@@ -4,8 +4,9 @@ import sqlite3
 #This program creates the database fields from scratch. 
 #Do not change except to update database
 
-
-db = sqlite3.connect('C:/PyDB/pokemonDB')
+if sqlite3:
+	print("helo")
+db = sqlite3.connect('./pokemonDB')
 cursor = db.cursor() #opens up singular connection threat to the database to run SQL transactions
 
 
@@ -23,18 +24,21 @@ cursor.execute('''
 #cursor.execue executes transactional commands through the connection opened by the cursor
 #You can only do one command per cursor.execute
 cursor.execute('''
-	CREATE TABLE town(Town_ID integer primary key AUTOINCREMENT,
+	CREATE TABLE town(Route_ID integer primary key AUTOINCREMENT,
 						Town_Name TEXT,
 						Area Text)
 ''') #AUTOINCREMENT increases the value of that field 1,2,3,4... (guarenteed unique field for every insertion)
 
 #The table with the foregin key has to go second so that the key knows what it is linking to
 cursor.execute('''
-	CREATE TABLE pokemon(Pokemon_ID integer primary key AUTOINCREMENT,
+	CREATE TABLE pokemon(
+						Pokemon_ID integer primary key AUTOINCREMENT,
 						Pokemon_Name TEXT,
-						Town_ID integer,
+						Location TEXT,
 						Rate_Found TEXT,
-						FOREIGN KEY(Town_ID) REFERENCES town(Town_ID))
+						Route_ID integer,
+						FOREIGN KEY(Route_ID) REFERENCES town(Route_ID)
+						)
 ''')
 
 
