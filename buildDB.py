@@ -1,7 +1,7 @@
 import sqlite3
 #DDL = data definition language - this is the definition of the table, therefore
 	# we should keep it seperate from the program ALWAYS
-#This program creates the database fields from scratch. 
+#This program creates the database fields from scratch.
 #Do not change except to update database
 
 
@@ -10,7 +10,7 @@ cursor = db.cursor() #opens up singular connection threat to the database to run
 
 
 #If this is your first time running the program, comment out the following:
-cursor.execute(''' 
+cursor.execute('''
 	DROP TABLE town
 ''')
 cursor.execute('''
