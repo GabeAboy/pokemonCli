@@ -1,0 +1,32 @@
+﻿Area,Location,Connections
+Kanto,Route 1,Pallet Town <-->Viridian City
+Kanto,Route 2,Viridian City <--> Pewter City W/Diglett's Cave
+Kanto,Route 3,Pewter City <--> Route 4 W/Mt. Moon
+Kanto,Route 4,Route 3 <--> Cerulean City W/Mt. Moon
+Kanto,Route 5,Cerulean City <--> Saffron City W/Underground Path
+Kanto,Route 6,Vermilion City <--> Saffron City W/Undergound Path
+Kanto,Route 7,Celadon City <--> Saffron City W/Undergound Path
+Kanto,Route 8,Lavender Town <--> Saffron City W/Underground Path
+Kanto,Route 9,Cerulean City <--> Route 10
+Kanto,Route 10,Route 9 <--> Lavender Town W/Rock Tunnel and Kanto Power Plant
+Kanto,Route 11,Vermilion City <--> Route 12 W/Diglett's Cave
+Kanto,Route 12,Lavender Town <--> Route 11 <--> Route 13
+Kanto,Route 13,Route 12 <--> Route 14
+Kanto,Route 14,Route 13 <--> Route 15
+Kanto,Route 15,Route 14 <--> Fuchsia City
+Kanto,Route 16,Celadon City <--> Route 17
+Kanto,Route 17,Route 16 <--> Route 18
+Kanto,Route 18,Route 17 <--> Fuchsia City
+Kanto,Route 19,Fuchsia City <--> Route 20
+Kanto,Route 20,Route 19 <--> Cinnabar Island
+Kanto,Route 21,Pallet Town <--> Cinnabar Island
+Kanto,Route 22,Viridian City <--> Route 23 <--> Pokemon League Reception Gate
+Kanto,Route 23,Indigo Plateau <--> Victory Road <--> Route 22
+Kanto,Route 24,Cerulean City <--> Route 25
+Kanto,Route 25,Route 24 <--> Sea Cottage
+Kanto,Celadon City,Route 7 <--> Route 16
+Kanto,Cerulean City,Route 4 <--> Route 5 <--> Route 9 <--> Route 24
+Kanto,Cinnabar Island,Route 20 <--> Route 21
+Kanto,Diglett's Cave,Route 2 <--> Route 11
+Kanto,Fuchsia City,Route 15 <--> Route 18 <--> Route 19
+Kanto,Pallet Town,Route 1 <--> Route 21
