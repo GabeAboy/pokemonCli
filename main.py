@@ -1,5 +1,5 @@
 import sqlite3
-db = sqlite3.connect('C:/repos/UVM/PokemonDB.db')
+db = sqlite3.connect('C:/repos/UVM/pokemonCli/database.db')
 cursor = db.cursor() #opens up singular connection threat to the database to run SQL transactions
 
 
@@ -7,6 +7,21 @@ cursor = db.cursor() #opens up singular connection threat to the database to run
 # print(cursor.fetchall())
 
 buffer = ""
+
+#getPokemon Working
+sql_statement = open('getPokemon.sql').read().replace('userInput', 'Pi')
+print(sql_statement)
+cursor.execute(sql_statement)
+print(cursor.fetchall())
+
+
+#getRouteInfo
+sql_statement = open('getRouteInfo.sql').read().replace('userInput', '1')
+print(sql_statement)
+cursor.execute(sql_statement)
+print(cursor.fetchall())
+
+
 
 print "Enter your SQL commands to execute in sqlite3, include semicolon."
 print "Enter a blank line to exit."
