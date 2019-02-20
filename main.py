@@ -1,5 +1,5 @@
 import sqlite3
-db = sqlite3.connect('C:/repos/UVM/pokemonCli/database.db')
+db = sqlite3.connect('database.db')
 cursor = db.cursor() #opens up singular connection threat to the database to run SQL transactions
 
 
@@ -23,8 +23,8 @@ print(cursor.fetchall())
 
 
 
-print "Enter your SQL commands to execute in sqlite3, include semicolon."
-print "Enter a blank line to exit."
+print ("Enter your SQL commands to execute in sqlite3, include semicolon.")
+print ("Enter a blank line to exit.")
 
 while True:
     line = raw_input()
@@ -39,7 +39,7 @@ while True:
             cursor.execute(buffer)
 
             if buffer.lstrip().upper().startswith("SELECT"):
-                print cursor.fetchall()
+                print (cursor.fetchall())
         except sqlite3.Error as e:
-            print "An error occurred:", e.args[0]
+            print ("An error occurred:", e.args[0])
         buffer = ""
