@@ -1,11 +1,13 @@
 import sqlite3
 import csv
+from os import path
 #DDL = data definition language - this is the definition of the table, therefore
 	# we should keep it seperate from the program ALWAYS
 #This program creates the database fields from scratch.
 #Do not change except to update database
 
-db = sqlite3.connect('/Users/Ember/Documents/GitHub/pokemonCli/database.db')
+dir=path.dirname(path.realpath(__file__))+"/"
+db = sqlite3.connect(dir + 'database.db')
 cursor = db.cursor() #opens up singular connection threat to the database to run SQL transactions
 
 
@@ -19,7 +21,7 @@ cursor.execute('''
 #This is because the tables need to Exist first before they can be dropped.
 #So comment them out, run the program, then uncomment them and run it again.
 
-f = open('/Users/Ember/Documents/GitHub/pokemonCli/tblPosition.csv','r')
+f = open(dir + 'tblPosition.csv','r')
 next(f, None)
 reader = csv.reader(f)
 #This opens the csv tblPosition and reads the data into the array 2D reader.
@@ -41,7 +43,7 @@ db.commit()
 #This is where we take the 2D reader array and insert each dimension as a row into the tblPosition
 
 
-f = open('/Users/Ember/Documents/GitHub/pokemonCli/tblPokemon.csv','r')
+f = open(dir + 'tblPokemon.csv','r')
 next(f, None)
 reader = csv.reader(f)
 #This opens the csv tblPokemon and reads the data into the array 2D reader.

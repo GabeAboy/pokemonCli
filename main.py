@@ -1,6 +1,8 @@
 #! python2
 import sqlite3
-db = sqlite3.connect('C:/Users/Ember/Documents/GitHub/pokemonCli/database.db') 
+from os import path
+dir=path.dirname(path.realpath(__file__))+"/"
+db = sqlite3.connect(dir + 'database.db') 
 cursor = db.cursor() #opens up singular connection threat to the database to run SQL transactions
 
 #if this is set to true, then it runs all of our tests in sequence and ends the program without allowing user input
