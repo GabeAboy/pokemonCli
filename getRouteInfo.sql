@@ -1,4 +1,4 @@
 /***************************/
 /* Route Information Query */
 
-SELEcT Connections, Location FROM tblPosition WHERE Location LIKE '%userInput%'
+SELECT Connections, Location FROM tblPosition WHERE Location LIKE '%userInput%'

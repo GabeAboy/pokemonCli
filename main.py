@@ -14,11 +14,11 @@ def parseFetch(fetch):
 		return str(fetch[0][0]).lower()
 	except:
 		return fetch
-    
-#hard coded table columns 
+
+#hard coded table columns
 location_cols = ['Area','Location','Connections']
 pokemon_cols = ['ID','Name','Location','Percent','Route']
-#takes the inputs from the user determines whether a join is needed and converts to valid 
+#takes the inputs from the user determines whether a join is needed and converts to valid
 #sql statements
 def simpleselect(table, column, col_val,item):
 	if (table == 'pokemon' and item in location_cols) or (table == 'position' and item in pokemon_cols):
@@ -48,15 +48,15 @@ if testing_bool:
 print("Welcome to Pokemon database!")
 print("Enter help to get examples of statements")
 print("Enter a blank line to exit.")
-   
-#testing_index keeps track of the index that you are accessing in the test_list 
+
+#testing_index keeps track of the index that you are accessing in the test_list
 #which is the list of statements to test
 if testing_bool:
-	test_index = 0	
+	test_index = 0
 	test_list = testing.keys()
 	print(test_list)
 
-#flag to tell loop to stop, if testing is on it will run all statements in the list, 
+#flag to tell loop to stop, if testing is on it will run all statements in the list,
 #if testing is off it will run until the user tells it to stop
 flag = True
 buffer = ""
@@ -69,23 +69,23 @@ while flag:
 		if testing_bool:
 			line = test_list[test_index]
 			print("\nTest: " + line)
-		else: 
+		else:
 			line = raw_input()
 		if line == "":
 			break
 		buffer += line
-		
+
 	# print("Query: "+ buffer)
-	
+
 	#if the query is a valid sql statement then run it and print the output
 	#if not then attempt to parse it into sql using our function
 	if sqlite3.complete_statement(buffer):
 		try:
 			#run commands through sql
 			buffer = buffer.strip()
-			cursor.execute(buffer)				
+			cursor.execute(buffer)
 			fetch = parseFetch(cursor.fetchall())
-			
+
 			#if testing is on then compare output to the values in the testing dictionary
 			if testing_bool:
 				if str(fetch) != str(testing[test_list[test_index]]).lower():
@@ -93,17 +93,17 @@ while flag:
 						', got ' + str(fetch))
 				else:
 					print("TEST PASSED")
-				
+
 				#increment the testing index for the list and if it is larger than the size of the list exit the loop
 				test_index += 1
 				if test_index >= len(test_list):
 					flag = False
 			else:
 				print(fetch)
-				
+
 		except sqlite3.Error as e:
 			print("An error occurred:", e.args[0])
-			
+
 			#increment the testing index for the list and if it is larger than the size of the list exit the loop
 			if testing_bool:
 				test_index += 1
@@ -127,7 +127,7 @@ while flag:
 		else:
 			#split the buffer so that it each word can be read seperately
 			split_buffer = buffer.split()
-			#if it is 5 long then it must be the specific name of the thing you are searching for 
+			#if it is 5 long then it must be the specific name of the thing you are searching for
 			#has a space in it so this combines them together into one element in the list
 			if len(split_buffer) == 5:
 				new_list = []
@@ -142,5 +142,3 @@ while flag:
 			else:
 				print('Could not understand query, please retry')
 				buffer = ""
-	
-
