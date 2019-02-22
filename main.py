@@ -1,6 +1,8 @@
 #! python2
 import sqlite3
-db = sqlite3.connect('database.db') 
+from os import path
+dir=path.dirname(path.realpath(__file__))+"/"
+db = sqlite3.connect(dir + 'database.db') 
 cursor = db.cursor() #opens up singular connection threat to the database to run SQL transactions
 
 #if this is set to true, then it runs all of our tests in sequence and ends the program without allowing user input
@@ -16,34 +18,39 @@ def parseFetch(fetch):
 		return fetch
 
 #hard coded table columns
-location_cols = ['Area','Location','Connections']
-pokemon_cols = ['ID','Name','Location','Percent','Route']
+location_cols = ['area','location','connections']
+pokemon_cols = ['id','name','environment','percent','route']
 #takes the inputs from the user determines whether a join is needed and converts to valid
 #sql statements
 def simpleselect(table, column, col_val,item):
-	if (table == 'pokemon' and item in location_cols) or (table == 'position' and item in pokemon_cols):
-		query = 'hi'
+	if (table == 'pokemon' and item.lower() in location_cols) or (table == 'position' and item.lower() in pokemon_cols):
+		if table == 'pokemon':
+			query = "select r."+item+" from tblPosition r, tblPokemon p where p.route=r.location and p."+column+"=\'"+col_val+"\';"
+		else:	
+			query = "select p."+item+" from tblPokemon p, tblPosition r where p.route=r.location and r."+column+"=\'"+col_val+"\';"
+		
+		
 	else:
 		query = "select " + item + " from tbl" + table + " where " + column + " like '" + col_val + "';"
 		#print(query)
 	return query
 
 #the keys are the statements that are being run and the values are the expected outputs
-if testing_bool:
-	testing = {
-		"pokemon name Weedle id": 18,
+testing = {
+		"pokemon name Weedle area": "Kanto",
+		"position location Route_11 name":"Drowzee",
 		"pokemon name ekans id": 13,
-		"pokemon name Weedle location": "grass",
-		"pokemon name Weedle route": "route2",
+		"pokemon name Weedle environment": "grass",
+		"pokemon name Weedle route": "Route_2",
 		"pokemon name Weedle percent": 0.15,
 		"pokemon id 18 name": "weedle",
-		"pokemon id 18 location": "grass",
+		"pokemon id 18 environment": "grass",
 		"pokemon id 18 percent": 0.15,
-		"pokemon id 18 route": "route2",
-		"position location route 1 area": "Kanto",
-		"position location route 1 connections": "pallet town <--> viridian city",
-		"SELECT tblPokemon.Name FROM tblPokemon JOIN tblPosition tblPokemon.Route = tblPostition.Location WHERE tblPosition.Location LIKE 'Route 1';": 'wtf'
-	}
+		"pokemon id 18 route": "Route_2",
+		"position location route_1 area": "Kanto",
+		"position location route_1 connections": "pallet town <--> viridian city",
+		"select r.area from tblPosition r, tblPokemon p where p.route=r.location and p.id=18;": "Kanto"
+}
 
 print("Welcome to Pokemon database!")
 print("Enter help to get examples of statements")
@@ -51,10 +58,9 @@ print("Enter a blank line to exit.")
 
 #testing_index keeps track of the index that you are accessing in the test_list
 #which is the list of statements to test
-if testing_bool:
-	test_index = 0
-	test_list = testing.keys()
-	print(test_list)
+
+test_index = 0
+test_list = testing.keys()
 
 #flag to tell loop to stop, if testing is on it will run all statements in the list,
 #if testing is off it will run until the user tells it to stop
@@ -73,8 +79,10 @@ while flag:
 			line = raw_input()
 		if line == "":
 			break
+		elif line.lower() == "test":
+			testing_bool=True
+			continue
 		buffer += line
-
 	# print("Query: "+ buffer)
 
 	#if the query is a valid sql statement then run it and print the output
@@ -88,16 +96,18 @@ while flag:
 
 			#if testing is on then compare output to the values in the testing dictionary
 			if testing_bool:
+				print(fetch)
 				if str(fetch) != str(testing[test_list[test_index]]).lower():
 					print('TEST FAILED: Expected ' + str(testing[test_list[test_index]]) + \
 						', got ' + str(fetch))
+					f=raw_input()
 				else:
 					print("TEST PASSED")
 
 				#increment the testing index for the list and if it is larger than the size of the list exit the loop
 				test_index += 1
 				if test_index >= len(test_list):
-					flag = False
+					testing_bool = False
 			else:
 				print(fetch)
 
@@ -120,9 +130,10 @@ while flag:
 						'\nSo an example would be: \n    pokemon name weedle id\n' + \
 						'\nwhich would return the ID of 18.\n\n' + \
 						'The TableNames are \'pokemon\' and \'position\'.\n' + \
-						'Pokemon ColumnNames are ID, Name, Location, Percent, Route\n' + \
+						'Pokemon ColumnNames are ID, Name, Environment, Percent, Route\n' + \
 						'Position ColumnNames are Area, Location, Connections\n\n' + \
-						'Searches are not case sensitive.\nHave fun!\n')
+						'Cross Table queries example: position location Route_11 name\nwhich returns the pokemon name Drowzee\n\n'+ \
+						'Searches are not case sensitive.\nLocations must have an Underscore (i.e. Route_1)\nHave fun!\n')
 			buffer = ""
 		else:
 			#split the buffer so that it each word can be read seperately
